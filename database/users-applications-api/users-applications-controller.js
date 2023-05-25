@@ -80,6 +80,7 @@ const getApprovers = async (req, res) => {
 };
 
 
+
 // const getSubjects = async (req, res) => {
 //     const subjects = await Subject.find({});
 //     res.send(subjects)
@@ -212,9 +213,80 @@ const deleteApprover = async (req, res) => {
     }
 }
 
-let data = await User.find({ user_type: "approver_adviser" });
-console.log(data);
+// let data = await User.find({ user_type: "approver_adviser" });
+// console.log(data);
+
+const addApplication = async (req, res) => {
+    try {
+        const {
+            student,
+            status,
+            step,
+            studentSubmission
+        } = req.body;
+
+        const newApplication = new Application({
+            status: status,
+            step: step,
+            student_submissions: [studentSubmission]
+        });
+
+        const savedApplication = await newApplication.save();
+
+        if (savedApplication._id) {
+            // addApplicationToStudent
+            const foundStudent = await User.find({ student });
+            if (!foundStudent) {
+                throw new Error('Student not found');
+            }
+
+            foundStudent.applications.push(savedApplication._id);
+            await student.save();
+
+            res.status(200).json({ success: true });
+            console.log("SUCCESS");
+
+        } else {
+            res.status(500).json({ success: false });
+            console.log("FALSE");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: "An error occurred while adding the student." });
+    }
+};
+
+const addRemark = async (req, res) => {
+    try {
+        const { application, remark } = req.body;
+
+        const savedRemark = await newRemark.save();
+        48
+        if (savedRemark._id) {
+            // addRemarkToApplication
+            const foundApplication = await Application.find({ application });
+            if (!foundApplication) {
+                throw new Error('Application not found');
+            }
+
+            foundApplication.remarks.push(savedRemark._id);
+            await application.save();
+
+            res.status(200).json({ success: true });
+            console.log("SUCCESS");
+
+        } else {
+            res.status(500).json({ success: false });
+            console.log("FALSE");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: "An error occurred while adding the remark." });
+    }
+}
 
 
 
-export { getStudents, getApprovers, addStudent, addApprover, deleteApprover };
+
+
+export { getStudents, getApprovers, addStudent, addApprover, editApprover, deleteApprover, addApplication };
