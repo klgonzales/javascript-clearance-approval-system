@@ -17,6 +17,18 @@ function AdviserViewPendingApplications() {
   const [showModal, setShowModal] = useState(-1);
   const [students, setStudents] = useState([]);
 
+  // search
+  const [searchTerm, setSearchTerm] = useState('');
+  const handleSearch = (event) => {
+      setSearchTerm(event.target.value);
+  };
+
+  // sorting
+  const [selectedFilter, setSelectedFilter] = useState('');
+
+  const [sortBy, setSortBy] = useState("none");
+  const [appsList, setAppsList] = useState([]);
+
   // get advisees with pending applications
 
   useEffect(() => {
@@ -31,10 +43,24 @@ function AdviserViewPendingApplications() {
     fetchData();
   }, [students]);
 
+  useEffect(() => {
+    switch (sortBy) {
+      case "date_asc":
+        setAppsList((prevList) => [...prevList].sort((a, b) => a.student_submissions.date-b.student_submissions.date));
+        break;
+      case "date_desc":
+        setAppsList((prevList) => [...prevList].sort((a, b) => b.student_submissions.date-a.student_submissions.date));
+        break;
+      default:
+        break;
+    }
+  }, [sortBy]);
+
   function showStudents() {
     if (students.length > 0) {  // have students with pending applications
 
       return (
+        
         <div className="students-container">
           {students.map((student, index) => (
             <div key={index} className="student-item">
@@ -76,6 +102,17 @@ function AdviserViewPendingApplications() {
   return (
     <div className="whole-container">
       <h3>{"View Students with Pending Application"}</h3>
+      <span>Date</span>
+      <button onClick={() => setSortBy("date_asc")}>↑</button>
+      <button onClick={() => setSortBy("date_desc")}>↓</button> <br />
+      <input
+        type="text"
+        placeholder="Search"
+        value={searchTerm}
+        onChange={handleSearch}
+      />
+      <div>
+      </div>
       {showStudents()}
     </div>
   );
