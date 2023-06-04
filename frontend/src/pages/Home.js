@@ -75,7 +75,9 @@ export default function Home() {
 
           localStorage.setItem("username", body.username);
         } else {
-          alert("Log in failed");
+          alert(
+            "Failed to Log In. Admin may still be reviewing your account or you may have entered the wrong credentials."
+          );
         }
       });
   }
@@ -109,7 +111,9 @@ export default function Home() {
 
           localStorage.setItem("username", body.username);
         } else {
-          alert("Log in failed");
+          alert(
+            "Failed to Log In. Admin may still be reviewing your account or you may have entered the wrong credentials."
+          );
         }
       });
   }
@@ -151,7 +155,11 @@ export default function Home() {
       {/* <div id="welcome-page"> */}
       <div id="header-container">
         <div id="glass-background">
-          <img id="image" src="https://i.pinimg.com/originals/38/4c/20/384c20132bda8dba92a55ddcebf29038.jpg" alt="home"></img>
+          <img
+            id="image"
+            src="https://i.pinimg.com/originals/38/4c/20/384c20132bda8dba92a55ddcebf29038.jpg"
+            alt="home"
+          ></img>
           <header id="header">Welcome To ClearMe</header>
         </div>
       </div>
@@ -163,21 +171,46 @@ export default function Home() {
         <input id="s-lname" placeholder="Last Name" required />
         <input id="s-sno" placeholder="Student Number" required />
         <input type="email" id="s-email" placeholder="UP Mail" required />
-        <input id="s-password" type="password" placeholder="Password" required />
+        <input
+          id="s-password"
+          type="password"
+          placeholder="Password"
+          required
+        />
         <button onClick={signUp}>Sign Up</button>
       </form>
 
       <h1>Log In for Students</h1>
       <form id="log-in-student">
-        <input type="email" id="ls-email" placeholder="Student Email" required />
-        <input id="ls-password" type="password" placeholder="Student Password" required />
+        <input
+          type="email"
+          id="ls-email"
+          placeholder="Student Email"
+          required
+        />
+        <input
+          id="ls-password"
+          type="password"
+          placeholder="Student Password"
+          required
+        />
         <button onClick={logInStudent}>Log In</button>
       </form>
 
       <h1>Log In for Approvers</h1>
       <form id="log-in-approver">
-        <input type="email" id="la-email" placeholder="Approver Email" required />
-        <input id="la-password" type="password" placeholder="Approver Password" required />
+        <input
+          type="email"
+          id="la-email"
+          placeholder="Approver Email"
+          required
+        />
+        <input
+          id="la-password"
+          type="password"
+          placeholder="Approver Password"
+          required
+        />
         <button onClick={logInApprover}>Log In</button>
       </form>
 
@@ -188,13 +221,17 @@ export default function Home() {
         <button onClick={logInAdmin}>Log In</button>
       </form>
 
-      <p class="note">Note: Coordinate with the Admin to create an Approver account.</p>
+      <p class="note">
+        Note: Coordinate with the Admin to create an Approver account.
+      </p>
 
       <footer>
-        <p>Unlock the Path to Success with Effortless Efficiency: Experience Seamless Clearance Approval in the Institute of Computer Science</p>
+        <p>
+          Unlock the Path to Success with Effortless Efficiency: Experience
+          Seamless Clearance Approval in the Institute of Computer Science
+        </p>
       </footer>
       {/* </div> */}
-
     </>
   );
 }
